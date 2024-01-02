@@ -4,7 +4,7 @@ import { TiDelete } from 'react-icons/ti';
 import { AppContext } from '../context/AppContext';
 
 const ExpenseItem = (props) => {
-    const { dispatch } = useContext(AppContext);
+    const { dispatch,currency } = useContext(AppContext);
 
     const handleDeleteExpense = () => {
         dispatch({
@@ -25,12 +25,32 @@ const ExpenseItem = (props) => {
         });
 
     }
+    const decreaseAllocation = (name) => {
+        const expense = {
+            name: name,
+            cost: 10,
+        };
+
+        dispatch({
+            type: 'RED_EXPENSE',
+            payload: expense
+        });
+
+    }
 
     return (
         <tr>
         <td>{props.name}</td>
-        <td>£{props.cost}</td>
-        <td><button onClick={event=> increaseAllocation(props.name)}>+</button></td>
+        <td>{currency}{props.cost}</td>
+        <td><button onClick={event=> increaseAllocation(props.name)} style={{color:'transparent', backgroundColor:'transparent', border:'none'}}>
+
+            <img src="https://freesvg.org/img/1430954247.png" width="30" height="30"/>
+            
+            </button>
+            </td>
+        <td><button onClick={event=> decreaseAllocation(props.name)} style={{color:'transparent', backgroundColor:'transparent', border:'none'}}>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2K_2NdfuvatoHyBDxmYC0hQPtpJSYDaDlkw&usqp=CAU" width="30" height="30"/>
+            </button></td>
         <td><TiDelete size='1.5em' onClick={handleDeleteExpense}></TiDelete></td>
         </tr>
     );
